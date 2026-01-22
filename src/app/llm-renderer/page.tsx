@@ -10,7 +10,7 @@ import {
 } from "@copilotkit/react-ui";
 import { AlertTriangle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import { useCallback, useRef, useState } from "react";
+import { Suspense, useCallback, useRef, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import LLMScreen, { ScreenProps, ScreenWidget } from "./LLMScreen";
 import ThoughtPartnerCard from "./ThoughtPartnerCard";
@@ -434,7 +434,9 @@ export default function CopilotKitPage() {
         Input={CustomInput}
         UserMessage={CustomUserMessage}
       >
-        <YourMainContent />
+        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+          <YourMainContent />
+        </Suspense>
       </CopilotSidebar>
     </main>
   );
