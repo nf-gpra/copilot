@@ -478,7 +478,7 @@ function YourMainContent() {
           {
             name: "type",
             description:
-              "The type of widget: 'stat' | 'line' | 'bar' | 'pie' | 'area' | 'table' | 'list' | 'markdown' | 'map'",
+              "The type of widget: 'stat' | 'line' | 'bar' | 'pie' | 'area' | 'table' | 'list' | 'markdown'",
             type: "string",
             required: true,
           },
@@ -502,8 +502,7 @@ function YourMainContent() {
               "3. 'pie': Array of objects like [{ name: 'Label', value: 10 }, ...]. " +
               "4. 'table': Array of objects where keys are column names, e.g., [{ Name: 'John', Age: 30 }, ...]. " +
               "5. 'list': Array of objects like [{ title: 'Item 1', subtitle: 'Desc', value: '100', status: 'success' }, ...]. " +
-              "6. 'markdown': { content: string } with markdown syntax." +
-              "7. 'map': { markers: [{ lat: number, lng: number, label?: string }] }.",
+              "6. 'markdown': { content: string } with markdown syntax.",
             type: "object",
             required: true,
           },
@@ -512,8 +511,7 @@ function YourMainContent() {
             description:
               "Configuration options: " +
               "1. 'stat': { prefix?: string, suffix?: string, icon?: 'users'|'dollar'|'activity'|'alert'|'info', color?: string, colorTheme?: string }. " +
-              "2. 'line'|'bar'|'area'|'pie': { colors?: string[], showLegend?: boolean, showGrid?: boolean, prefix?: string, colorTheme?: string }. " +
-              "3. 'map': { center?: { lat: number, lng: number }, zoom?: number, mapId?: string, colorTheme?: string }.",
+              "2. 'line'|'bar'|'area'|'pie': { colors?: string[], showLegend?: boolean, showGrid?: boolean, prefix?: string, colorTheme?: string }.",
             type: "object",
           },
         ],
@@ -707,7 +705,7 @@ function YourMainContent() {
           {
             name: "type",
             description:
-              "The type of widget: 'stat' | 'line' | 'bar' | 'pie' | 'area' | 'table' | 'list' | 'markdown' | 'map'",
+              "The type of widget: 'stat' | 'line' | 'bar' | 'pie' | 'area' | 'table' | 'list' | 'markdown'",
             type: "string",
             required: true,
           },
@@ -736,8 +734,7 @@ function YourMainContent() {
               "3. 'pie': Array of objects like [{ name: 'Label', value: 10 }, ...]. " +
               "4. 'table': Array of objects where keys are column names, e.g., [{ Name: 'John', Age: 30 }, ...]. " +
               "5. 'list': Array of objects like [{ title: 'Item 1', subtitle: 'Desc', value: '100', status: 'success' }, ...]. " +
-              "6. 'markdown': Support common markdown syntax like bullet-points (Using '* ...' or '- ...'), paragraphs, bold/italics, etc." +
-              "7. 'map': { markers: [{ lat: number, lng: number, label?: string }] }.",
+              "6. 'markdown': Support common markdown syntax like bullet-points (Using '* ...' or '- ...'), paragraphs, bold/italics, etc.",
             type: "object",
             required: true,
           },
@@ -746,8 +743,7 @@ function YourMainContent() {
             description:
               "Configuration options: " +
               "1. 'stat': { prefix?: string, suffix?: string, icon?: 'users'|'dollar'|'activity'|'alert'|'info', color?: string }. " +
-              "2. 'line'|'bar'|'area'|'pie': { colors?: string[], showLegend?: boolean, showGrid?: boolean, prefix?: string }. " +
-              "3. 'map': { center?: { lat: number, lng: number }, zoom?: number, mapId?: string }.",
+              "2. 'line'|'bar'|'area'|'pie': { colors?: string[], showLegend?: boolean, showGrid?: boolean, prefix?: string }.",
             type: "object",
           },
         ],

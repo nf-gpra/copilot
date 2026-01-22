@@ -121,32 +121,6 @@ class MarkdownWidget(TypedDict, total=False):
     data: MarkdownData
 
 
-class MapMarkerData(TypedDict, total=False):
-    lat: float
-    lng: float
-    label: str
-
-
-class MapWidgetConfig(TypedDict, total=False):
-    center: dict  # { lat: float, lng: float }
-    zoom: int
-    mapId: str
-
-
-class MapWidgetData(TypedDict, total=False):
-    markers: List[MapMarkerData]
-
-
-class MapWidget(TypedDict, total=False):
-    id: str
-    type: Literal["map"]
-    title: str
-    description: str
-    colSpan: Literal[1, 2, 3, 4]
-    data: MapWidgetData
-    config: MapWidgetConfig
-
-
 ScreenWidget = Union[
     StatWidget,
     ChartWidget,
@@ -154,7 +128,6 @@ ScreenWidget = Union[
     TableWidget,
     ListWidget,
     MarkdownWidget,
-    MapWidget,
 ]
 
 
@@ -257,7 +230,6 @@ You take user's request and maintain a 'screen state' which represents your UI D
 *   Use **Bar/Line/Area Charts** for comparisons (e.g., Rent per Floor) or distributions (e.g., Lease Expiry Profile by Year).
 *   Use **Pie Charts** for categorical breakdowns (e.g., Building Status: Development vs. Occupied, or Tenant Industry Mix).
 *   Use **Tables** for granular, row-level details that require precise reading (e.g., a full Rent Roll or Outreach Log).
-*   Use **Maps** only when specific location data (addresses/postcodes) is relevant to the user's query (e.g., "Where are our target tenants currently located?").
 
 **Tone & Style:**
 Maintain a professional, data-driven, and concise tone suitable for Asset Managers. Avoid conversational filler. Focus on the asset performance and leasing velocity.
@@ -269,12 +241,9 @@ Maintain a professional, data-driven, and concise tone suitable for Asset Manage
             "3. 'pie': data must be an array of objects with 'name' and 'value' keys. Example: [{'name': 'A', 'value': 10}, {'name': 'B', 'value': 20}].\n"
             "4. 'table': data must be an array of objects where keys are column names. Example: [{'Name': 'John', 'Age': 30}, {'Name': 'Jane', 'Age': 25}].\n"
             "5. 'list': data must be an array of objects with 'title', 'subtitle', 'value', 'status', and 'timestamp' keys.\n"
-            "6. 'markdown': data must be { content: string } where content is a markdown string. Support common markdown syntax like bullet-points (Using '* ...' or '- ...'), paragraphs, bold/italics, etc.\n"
-            "7. 'map': data must be { markers: [{ lat: number, lng: number, label?: string }] }. "
-            "Optional config: { center?: { lat: number, lng: number }, zoom?: number, mapId?: string }.\n\n"
+            "6. 'markdown': data must be { content: string } where content is a markdown string. Support common markdown syntax like bullet-points (Using '* ...' or '- ...'), paragraphs, bold/italics, etc.\n\n"
             "\n\n --- \n\n"
             "For presentation format, have 2 or more widgets."
-            "Maps should typically have a colSpan of 2 or 4."
             "\n\n --- \n\n"
             "Below are some extra data for reference. Use them to design the UI if relevant.\n\n"
             f"{STACKING_PLAN_99CR}\n\n"

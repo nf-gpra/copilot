@@ -17,7 +17,6 @@
     "@copilotkit/react-core": "1.50.1",
     "@copilotkit/react-ui": "1.50.1",
     "@copilotkit/runtime": "1.50.1",
-    "@vis.gl/react-google-maps": "^1.7.1",
     "framer-motion": "^12.24.11",
     "next": "16.1.1",
     "react": "^19.2.3",

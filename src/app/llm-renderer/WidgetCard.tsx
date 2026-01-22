@@ -1,9 +1,3 @@
-import {
-  AdvancedMarker,
-  APIProvider,
-  Map,
-  Pin,
-} from "@vis.gl/react-google-maps";
 import { motion } from "framer-motion";
 import {
   Activity,
@@ -11,7 +5,6 @@ import {
   BarChart3,
   DollarSign,
   FileText,
-  Globe,
   Info,
   Layers,
   LineChart as LineChartIcon,
@@ -43,7 +36,6 @@ import {
   YAxis,
 } from "recharts";
 import remarkGfm from "remark-gfm";
-import { GOOGLE_MAPS_API_KEY } from "./GOOGLE_MAPS_API_KEY";
 
 const DEBUG_MODE = true;
 
@@ -59,8 +51,7 @@ export type WidgetType =
   | "area"
   | "table"
   | "list"
-  | "markdown"
-  | "map";
+  | "markdown";
 
 interface BaseWidget {
   id: string;
@@ -170,33 +161,13 @@ interface MarkdownWidgetDef extends BaseWidget {
   };
 }
 
-interface MapMarkerData {
-  lat: number;
-  lng: number;
-  label?: string;
-}
-
-interface MapWidgetDef extends BaseWidget {
-  type: "map";
-  data: {
-    markers: MapMarkerData[];
-  };
-  config?: {
-    center?: { lat: number; lng: number };
-    zoom?: number;
-    mapId?: string;
-    colorTheme?: CardColorTheme;
-  };
-}
-
 export type ScreenWidget =
   | StatWidgetDef
   | ChartWidgetDef
   | PieWidgetDef
   | TableWidgetDef
   | ListWidgetDef
-  | MarkdownWidgetDef
-  | MapWidgetDef;
+  | MarkdownWidgetDef;
 
 // ==========================================
 // 2. Color Theme Utilities
@@ -214,8 +185,6 @@ export const colorThemes: Record<
     iconBg: string;
     iconText: string;
     chartColors: string[];
-    pinBackground: string;
-    pinBorder: string;
   }
 > = {
   blue: {
@@ -228,8 +197,6 @@ export const colorThemes: Record<
     iconBg: "bg-blue-100",
     iconText: "text-blue-600",
     chartColors: ["#3b82f6", "#60a5fa", "#93c5fd", "#1d4ed8", "#2563eb"],
-    pinBackground: "#3b82f6",
-    pinBorder: "#1d4ed8",
   },
   emerald: {
     gradient: "from-emerald-50 via-white to-white",
@@ -241,8 +208,6 @@ export const colorThemes: Record<
     iconBg: "bg-emerald-100",
     iconText: "text-emerald-600",
     chartColors: ["#10b981", "#34d399", "#6ee7b7", "#059669", "#047857"],
-    pinBackground: "#10b981",
-    pinBorder: "#059669",
   },
   violet: {
     gradient: "from-violet-50 via-white to-white",
@@ -254,8 +219,6 @@ export const colorThemes: Record<
     iconBg: "bg-violet-100",
     iconText: "text-violet-600",
     chartColors: ["#8b5cf6", "#a78bfa", "#c4b5fd", "#7c3aed", "#6d28d9"],
-    pinBackground: "#8b5cf6",
-    pinBorder: "#6d28d9",
   },
   amber: {
     gradient: "from-amber-50 via-white to-white",
@@ -267,8 +230,6 @@ export const colorThemes: Record<
     iconBg: "bg-amber-100",
     iconText: "text-amber-600",
     chartColors: ["#f59e0b", "#fbbf24", "#fcd34d", "#d97706", "#b45309"],
-    pinBackground: "#f59e0b",
-    pinBorder: "#d97706",
   },
   sky: {
     gradient: "from-sky-50 via-white to-white",
@@ -280,8 +241,6 @@ export const colorThemes: Record<
     iconBg: "bg-sky-100",
     iconText: "text-sky-600",
     chartColors: ["#0ea5e9", "#38bdf8", "#7dd3fc", "#0284c7", "#0369a1"],
-    pinBackground: "#0ea5e9",
-    pinBorder: "#0369a1",
   },
   cyan: {
     gradient: "from-cyan-50 via-white to-white",
@@ -293,8 +252,6 @@ export const colorThemes: Record<
     iconBg: "bg-cyan-100",
     iconText: "text-cyan-600",
     chartColors: ["#06b6d4", "#22d3ee", "#67e8f9", "#0891b2", "#0e7490"],
-    pinBackground: "#06b6d4",
-    pinBorder: "#0891b2",
   },
   indigo: {
     gradient: "from-indigo-50 via-white to-white",
@@ -306,8 +263,6 @@ export const colorThemes: Record<
     iconBg: "bg-indigo-100",
     iconText: "text-indigo-600",
     chartColors: ["#6366f1", "#818cf8", "#a5b4fc", "#4f46e5", "#4338ca"],
-    pinBackground: "#6366f1",
-    pinBorder: "#4338ca",
   },
   teal: {
     gradient: "from-teal-50 via-white to-white",
@@ -319,8 +274,6 @@ export const colorThemes: Record<
     iconBg: "bg-teal-100",
     iconText: "text-teal-600",
     chartColors: ["#14b8a6", "#2dd4bf", "#5eead4", "#0d9488", "#0f766e"],
-    pinBackground: "#14b8a6",
-    pinBorder: "#0f766e",
   },
   orange: {
     gradient: "from-orange-50 via-white to-white",
@@ -332,8 +285,6 @@ export const colorThemes: Record<
     iconBg: "bg-orange-100",
     iconText: "text-orange-600",
     chartColors: ["#f97316", "#fb923c", "#fdba74", "#ea580c", "#c2410c"],
-    pinBackground: "#f97316",
-    pinBorder: "#c2410c",
   },
   stone: {
     gradient: "from-stone-50 via-white to-white",
@@ -345,8 +296,6 @@ export const colorThemes: Record<
     iconBg: "bg-stone-100",
     iconText: "text-stone-600",
     chartColors: ["#78716c", "#a8a29e", "#d6d3d1", "#57534e", "#44403c"],
-    pinBackground: "#78716c",
-    pinBorder: "#44403c",
   },
   slate: {
     gradient: "from-slate-50 via-white to-white",
@@ -358,8 +307,6 @@ export const colorThemes: Record<
     iconBg: "bg-slate-100",
     iconText: "text-slate-600",
     chartColors: ["#64748b", "#94a3b8", "#cbd5e1", "#475569", "#334155"],
-    pinBackground: "#64748b",
-    pinBorder: "#334155",
   },
 };
 
@@ -995,46 +942,6 @@ const MarkdownRenderer: React.FC<{
   );
 };
 
-const MapRenderer: React.FC<{
-  data: { markers: MapMarkerData[] };
-  config?: MapWidgetDef["config"];
-  themeColor?: CardColorTheme;
-}> = ({ data, config, themeColor = "blue" }) => {
-  const theme = getTheme(config?.colorTheme || themeColor);
-  const defaultCenter = { lat: 37.7749, lng: -122.4194 };
-  const center = config?.center || defaultCenter;
-  const zoom = config?.zoom || 11;
-  const mapId = config?.mapId || "DEMO_MAP_ID";
-
-  return (
-    <div className="w-full h-96 relative overflow-hidden rounded-b-xl">
-      <APIProvider apiKey={GOOGLE_MAPS_API_KEY}>
-        <Map
-          defaultCenter={center}
-          defaultZoom={zoom}
-          mapId={mapId}
-          disableDefaultUI={false}
-          className="w-full h-full"
-        >
-          {data.markers.map((marker, markerIndex) => (
-            <AdvancedMarker
-              key={`${markerIndex}-${marker.lat}-${marker.lng}`}
-              position={{ lat: marker.lat, lng: marker.lng }}
-              title={marker.label}
-            >
-              <Pin
-                background={theme.pinBackground}
-                borderColor={theme.pinBorder}
-                glyphColor={"#ffffff"}
-              />
-            </AdvancedMarker>
-          ))}
-        </Map>
-      </APIProvider>
-    </div>
-  );
-};
-
 // ==========================================
 // 5. Main Extracted Component
 // ==========================================
@@ -1051,7 +958,6 @@ const widgetTypeIcons: Record<
   table: Table2,
   list: List,
   markdown: FileText,
-  map: Globe,
 };
 
 const getWidgetIcon = (widgetType: WidgetType): React.ReactNode => {
@@ -1104,16 +1010,6 @@ const renderWidgetContent = (widget: ScreenWidget) => {
         <ErrorBoundary FallbackComponent={ErrorFallback}>
           <MarkdownRenderer
             content={widget.data.content}
-            themeColor={themeColor}
-          />
-        </ErrorBoundary>
-      );
-    case "map":
-      return (
-        <ErrorBoundary FallbackComponent={ErrorFallback}>
-          <MapRenderer
-            data={widget.data}
-            config={widget.config}
             themeColor={themeColor}
           />
         </ErrorBoundary>

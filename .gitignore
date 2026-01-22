@@ -48,6 +48,3 @@ bun.lockb
 
 # LangGraph API
 .langgraph_api
-
-
-GOOGLE_MAPS_API_KEY.ts
