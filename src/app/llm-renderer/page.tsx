@@ -11,7 +11,7 @@ import {
 import { AlertTriangle } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useCallback, useRef, useState } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import LLMScreen, { ScreenProps, ScreenWidget } from "./LLMScreen";
 import ThoughtPartnerCard from "./ThoughtPartnerCard";
 
@@ -19,10 +19,10 @@ import ThoughtPartnerCard from "./ThoughtPartnerCard";
 function ThoughtPartnerErrorFallback({
   error,
   resetErrorBoundary,
-}: {
-  error: Error;
-  resetErrorBoundary: () => void;
-}) {
+}: FallbackProps) {
+  const errorMessage =
+    error instanceof Error ? error.message : String(error ?? "Unknown error");
+
   return (
     <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl">
       <div className="flex items-center gap-2 mb-2">
@@ -36,7 +36,7 @@ function ThoughtPartnerErrorFallback({
         invalid format.
       </p>
       <p className="text-xs text-amber-600 font-mono mb-3 break-words bg-amber-100 p-2 rounded">
-        {error.message}
+        {errorMessage}
       </p>
       <button
         onClick={resetErrorBoundary}
