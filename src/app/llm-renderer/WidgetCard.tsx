@@ -16,7 +16,7 @@ import {
   Users,
 } from "lucide-react";
 import React from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import ReactMarkdown from "react-markdown";
 import {
   Area,
@@ -343,15 +343,12 @@ export const getWidgetThemeColor = (widget: ScreenWidget): CardColorTheme => {
 const MAX_RETRY_ATTEMPTS = 10;
 const RETRY_DELAY_MS = 500;
 
-const ErrorFallback = ({
-  error,
-  resetErrorBoundary,
-}: {
-  error: Error;
-  resetErrorBoundary: () => void;
-}) => {
+const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => {
   const [retryCount, setRetryCount] = React.useState(0);
   const [isRetrying, setIsRetrying] = React.useState(true);
+
+  const errorMessage =
+    error instanceof Error ? error.message : String(error ?? "Unknown error");
 
   React.useEffect(() => {
     if (retryCount >= MAX_RETRY_ATTEMPTS) {
@@ -386,7 +383,7 @@ const ErrorFallback = ({
         <AlertTriangle className="w-4 h-4" />
         <span className="font-semibold text-sm">Widget Error</span>
       </div>
-      <p className="text-xs font-mono wrap-break-word">{error.message}</p>
+      <p className="text-xs font-mono wrap-break-word">{errorMessage}</p>
       <button
         onClick={() => {
           setRetryCount(0);
