@@ -7,7 +7,8 @@ import { LangGraphAgent } from "@copilotkit/runtime/langgraph";
 import { NextRequest, NextResponse } from "next/server";
 
 const LANGGRAPH_URL =
-  process.env.LANGGRAPH_DEPLOYMENT_URL || "http://localhost:8123";
+  process.env.LANGGRAPH_DEPLOYMENT_URL ||
+  "http://localhost:8123/jennifer-langgraph";
 
 // Debug: Log unhandled rejections
 process.on("unhandledRejection", (reason, promise) => {
