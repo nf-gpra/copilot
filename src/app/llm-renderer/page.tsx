@@ -434,7 +434,13 @@ export default function CopilotKitPage() {
         Input={CustomInput}
         UserMessage={CustomUserMessage}
       >
-        <Suspense fallback={<div className="h-screen flex items-center justify-center">Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="h-screen flex items-center justify-center">
+              Loading...
+            </div>
+          }
+        >
           <YourMainContent />
         </Suspense>
       </CopilotSidebar>
